@@ -42,9 +42,7 @@ const option = reactive({
   yAxis: {
     type: 'value',
     axisLabel : {
-      textStyle: {
       color: '#ffffff'
-      }
     }
   },
   series: [

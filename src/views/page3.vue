@@ -1,9 +1,11 @@
 <template>
   
-
-  <div class="left" dv-bg>
-    <div id="page3" style="width: 1000px;height: 500px;"></div>
-  </div>
+    <div class="left" style="display: inline-block;">
+      <dv-border-box1>
+        <div id="page3" style="width: 1000px;height: 500px;"></div>
+     </dv-border-box1>
+    </div>
+    
 </template>
 
 <script setup>
@@ -86,20 +88,38 @@ const option = reactive({
     }
   ],
   title: {
-    text: 'Income of Germany and France since 1950'
+    text: '数据模拟1',
+    left: 'center',
+    textStyle:{
+      color: '#ffffff'
+    }
   },
   tooltip: {
     trigger: 'axis'
   },
   legend: {
-    data: ['germany', 'france', 'china']
+    data: ['germany', 'france', 'china'],
+    bottom: 10,
+    left: 'center',
+    textStyle:{
+      color: '#ffffff'
+    }
   },
   xAxis: {
     type: 'category',
-    nameLocation: 'middle'
+    nameLocation: 'middle',
+    axisLabel:{
+      color: '#ffffff'
+    }
   },
   yAxis: {
-    name: 'Income'
+    name: '收入',
+    nameTextStyle: {
+      color: '#ffffff'
+    },
+    axisLabel:{
+      color: '#ffffff'
+    }
   },
   series: [
     {
@@ -143,12 +163,6 @@ const option = reactive({
 </script>
 
 <style scoped>
-html,
-body {
-  padding: 0;
-  margin: 0;
-}
-
 .left {
   padding-left: 20px;
   padding-top: 40px;
