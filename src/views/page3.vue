@@ -54,7 +54,7 @@ const option = reactive({
         type: 'filter',
         config: {
           and: [
-            { dimension: 'Year', gte: 1950 },
+            { dimension: 'Year', gte: 2000 },
             { dimension: 'Country', '=': 'Germany' }
           ]
         }
@@ -67,7 +67,7 @@ const option = reactive({
         type: 'filter',
         config: {
           and: [
-            { dimension: 'Year', gte: 1950 },
+            { dimension: 'Year', gte: 2000 },
             { dimension: 'Country', '=': 'France' }
           ]
         }
@@ -80,7 +80,7 @@ const option = reactive({
         type: 'filter',
         config: {
           and: [
-            { dimension: 'Year', gte: 1950 },
+            { dimension: 'Year', gte: 2000 },
             { dimension: 'Country', '=': 'China' }
           ]
         }

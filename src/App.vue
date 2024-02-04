@@ -5,6 +5,7 @@
         <RouterLink to="/"><dv-button @click="console.log('click')" border="Border3" color="#c8161d" font-color="#e18a3b">页面一</dv-button></RouterLink>
         <RouterLink to="/page2"><dv-button @click="console.log('click')" border="Border3" color="#c8161d" font-color="#e18a3b">页面二</dv-button></RouterLink>
         <RouterLink to="/page3"><dv-button @click="console.log('click')" border="Border3" color="#c8161d" font-color="#e18a3b">页面三</dv-button></RouterLink>
+        <RouterLink to="/page4"><dv-button @click="console.log('click')" border="Border3" color="#c8161d" font-color="#e18a3b">页面四</dv-button></RouterLink>
       </div>
       <div class="title">
         <h1>数据可视化平台</h1>

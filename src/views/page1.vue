@@ -1,8 +1,10 @@
 <template>
   
   
-  <div class="left">
-      <div id="page1" style="width: 300px;height: 300px;"></div>
+    <div class="left" style="display: inline-block;">
+      <dv-border-box1>
+        <div id="page1" style="width: 800px;height: 300px;"></div>
+     </dv-border-box1>
     </div>
 </template>
 
@@ -56,5 +58,8 @@ const option = reactive({
 
 <style scoped>
 html,body{padding: 0;margin: 0;}
-.left{padding-left: 20px;}
+.left {
+  padding-left: 20px;
+  padding-top: 40px;
+}
 </style>
