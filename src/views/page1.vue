@@ -5,11 +5,13 @@
       <dv-border-box1>
         <div id="page1" style="width: 800px;height: 300px;"></div>
      </dv-border-box1>
+     <button @click="updataECharts">更新数据</button>
     </div>
 </template>
 
 <script setup>
-import { getCurrentInstance, onMounted, reactive } from "vue";
+import { getCurrentInstance, onMounted, ref } from "vue";
+import axios from "axios";
 
 const { $echarts } = getCurrentInstance().appContext.app.config.globalProperties
 
@@ -17,43 +19,25 @@ onMounted(() => {
   initECharts()
 })
 
-const setValue = () => {
-  option.series[0].data[6] = 500
-  updataECharts()
-}
-
-const initECharts = () => {
+const initECharts = async () => {
   const page1 = $echarts.init(document.getElementById("page1"))
-  page1.setOption(option)
+  await getData()
+  page1.setOption(option.value)
 }
 
-const updataECharts = () => {
+const updataECharts = async () => {
   const page1 = document.getElementById("page1")
   const myecharts = $echarts.getInstanceByDom(page1)
-  myecharts.setOption(option)
+  await getData()
+  myecharts.setOption(option.value)
 }
 
-const option = reactive({
-  xAxis: {
-    type: 'category',
-    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-    axisLabel:{
-      color: '#ffffff'
-    }
-  },
-  yAxis: {
-    type: 'value',
-    axisLabel : {
-      color: '#ffffff'
-    }
-  },
-  series: [
-    {
-      data: [120, 200, 150, 80, 70, 110, 130],
-      type: 'bar'
-    }
-  ]
-})
+const getData = async () => {
+  const result = await axios.get('/api/page1')
+  option.value = result.data.data
+}
+
+const option = ref({})
 </script>
 
 <style scoped>

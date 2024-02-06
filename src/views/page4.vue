@@ -1,6 +1,6 @@
 <template>
   <div class="left" style="display: inline-block;">
-      <v-chart style="width: 1000px;height: 1000px;" :option="option"
+      <v-chart style="width: 700px;height: 700px;" :option="option"
           ref="centerMapRef"
           @click="mapClick" v-if="flag" />
   </div>

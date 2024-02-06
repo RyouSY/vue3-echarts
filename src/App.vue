@@ -14,7 +14,7 @@
       <div class="filer">
         <dv-button @click="console.log('click')" border="Border3" color="#c8161d" font-color="#e18a3b">日期筛选</dv-button>
         <dv-button @click="console.log('click')" border="Border3" color="#c8161d" font-color="#e18a3b">地区筛选</dv-button>
-        <dv-button @click="console.log('click')" border="Border3" color="#c8161d" font-color="#e18a3b">页面设置</dv-button>
+        <dv-button @click="test" border="Border3" color="#c8161d" font-color="#e18a3b">页面设置</dv-button>
       </div>
     </div>
     <RouterView />
@@ -23,6 +23,14 @@
 
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+import axios from "axios";
+
+
+
+const test = async () => {
+ const result = await axios.get('/api/json')
+ console.log(result.data)
+}
 
 </script>
 

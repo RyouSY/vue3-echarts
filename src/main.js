@@ -8,6 +8,10 @@ import { registerEcharts } from "@/lib/echarts"
 import * as echarts from 'echarts'
 
 
+import './mock/index'
+
+
+
 const app = createApp(App)
 app.config.globalProperties.$echarts = echarts
 registerEcharts(app)
