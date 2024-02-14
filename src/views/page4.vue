@@ -1,49 +1,84 @@
 <template>
-  <div class="left" style="display: inline-block;">
-      <v-chart style="width: 700px;height: 700px;" :option="option"
-          ref="centerMapRef"
-          @click="mapClick" v-if="flag" />
+  <div class="left" style="display: inline-block;width: 700px;height: 500px;box-sizing: border-box;">
+    <dv-button @click="allData" border="Border3" color="#c8161d" font-color="#e18a3b" style="display: inline-block;"
+      v-if="code !== '中国'">全国</dv-button>
+    <v-chart :option="option" ref="centerMapRef" @click="mapClick" v-if="flag" />
   </div>
 </template>
 
 <script setup>
 import { getCurrentInstance, onMounted, ref } from "vue";
 import china from '@/lib/china.json'
+import { regionCodes } from '@/lib/mapList'
+const { $echarts } = getCurrentInstance().appContext.app.config.globalProperties
+import axios from "axios";
 
 const flag = ref(false)
+const code = ref("中国"); //china 代表中国 其他地市是行政编码
 
-const { $echarts } = getCurrentInstance().appContext.app.config.globalProperties
 
 onMounted(() => {
   drawMap()
+  getProvince()
   flag.value = true
-  
 })
 
 const mapClick = (params) => {
-  console.log(params.name);
+  getCity()
+  filterMapName(params.name)
+
 };
 
-const initECharts = () => {
-  drawMap()
-  const page3 = $echarts.init(document.getElementById("page4"))
-  page3.setOption(option)
+const getProvince = async () => {
+  const result = await axios.get('/api/province')
+  option.value.series[0].data = result.data.data
 }
 
-const updataECharts = () => {
-  const page3 = document.getElementById("page3")
-  const myecharts = $echarts.getInstanceByDom(page3)
-  myecharts.setOption(option)
+const getCity = async () => {
+  const result = await axios.get('/api/city')
+  option.value.series[0].data = result.data.data
+}
+
+const filterMapName = (mapName) => {
+  if (mapName === '中国') {
+    code.value = mapName
+    getMapJson('china')
+    return
+  }
+  code.value = mapName
+  getMapJson(regionCodes[mapName].adcode)
+
+}
+
+const allData = () => {
+  getProvince()
+  filterMapName('中国')
+
+}
+
+const getMapJson = async (mapCode) => {
+  const result = await axios.get(`./mapjson/${mapCode}.json`)
+  option.value.series[0].map = code.value
+  $echarts.registerMap(code.value, {
+    geoJSON: result.data,
+    specialAreas: {},
+  });
 }
 
 const drawMap = () => {
-  $echarts.registerMap('china', china)
+  $echarts.registerMap('中国', china)
 }
 
 const option = ref({
   tooltip: {
     trigger: 'item',
-    formatter: '{b}<br/>{c} (p / km2)'
+    formatter: function (params) {
+      if (params.data) {
+        return `${params.name}<br/>${params.data["value"]} (p / km2)`
+      } else {
+        return params.name;
+      }
+    }
   },
   visualMap: [{
     type: 'continuous',//类型为连续型
@@ -63,82 +98,67 @@ const option = ref({
   series: [{
     type: 'map',
     name: "降水量",
-    map: 'china',//这里的名称需要和 echarts.registerMap('china',{})中的名称一致
+    map: '中国',//这里的名称需要和 echarts.registerMap('china',{})中的名称一致
     roam: true, //缩放
-    zoom: 1.2,//默认地图在容器中显示zoom:1,可根据需求放大缩小地图
+    zoom: 1.1,//默认地图在容器中显示zoom:1,可根据需求放大缩小地图
     label: {
-      show: true,//是否显示省份名称
+      show: false,//是否显示省份名称
       color: "#fff"
     },
     itemStyle: {
-      areaColor: '#AAD5FF',//地图区域背景颜色
-      borderColor: '#fff'//地图边界颜色
+      borderColor: "rgba(147, 235, 248, .8)",
+      borderWidth: 1,
+      areaColor: {
+        type: "radial",
+        x: 0.5,
+        y: 0.5,
+        r: 0.8,
+        colorStops: [
+          {
+            offset: 0,
+            color: "rgba(147, 235, 248, 0)", // 0% 处的颜色
+          },
+          {
+            offset: 1,
+            color: "rgba(147, 235, 248, .2)", // 100% 处的颜色
+          },
+        ],
+        globalCoord: false, // 缺为 false
+      },
+      shadowColor: "rgba(128, 217, 248, .3)",
+      shadowOffsetX: -2,
+      shadowOffsetY: 2,
+      shadowBlur: 10,
     },
     //高亮时的设置
     emphasis: {
-      //高亮时地图区域背景颜色
-      itemStyle: {
-        areaColor: 'pink',
-      },
-      //文字颜色，样式在此处
       label: {
-        color: '#fff'
-      }
+        show: false,
+      },
+      itemStyle: {
+        // areaColor: "rgba(56,155,183,.7)",
+        areaColor: {
+          type: "radial",
+          x: 0.5,
+          y: 0.5,
+          r: 0.8,
+          colorStops: [
+            {
+              offset: 0,
+              color: "rgba(147, 235, 248, 0)", // 0% 处的颜色
+            },
+            {
+              offset: 1,
+              color: "rgba(56,155,183, .8)", // 100% 处的颜色
+            },
+          ],
+          globalCoord: false, // 缺为 false
+        },
+        borderWidth: 1,
+      },
     },
     // 数据
-    data: [
-      { name: "北京", value: Math.round(Math.random() * 1000) },
-      { name: "天津", value: Math.round(Math.random() * 1000) },
-      { name: "上海", value: Math.round(Math.random() * 1000) },
-      { name: "重庆", value: Math.round(Math.random() * 1000) },
-      { name: "河北省", value: Math.round(Math.random() * 1000) },
-      { name: "河南省", value: Math.round(Math.random() * 1000) },
-      { name: "云南省", value: Math.round(Math.random() * 1000) },
-      { name: "辽宁省", value: Math.round(Math.random() * 1000) },
-      { name: "黑龙江省", value: Math.round(Math.random() * 1000) },
-      { name: "湖南省", value: Math.round(Math.random() * 1000) },
-      { name: "安徽省", value: Math.round(Math.random() * 1000) },
-      { name: "山东省", value: Math.round(Math.random() * 1000) },
-      { name: "江苏省", value: Math.round(Math.random() * 1000) },
-      { name: "浙江省", value: Math.round(Math.random() * 1000) },
-      { name: "江西省", value: Math.round(Math.random() * 1000) },
-      { name: "湖北省", value: Math.round(Math.random() * 1000) },
-      { name: "甘肃省", value: Math.round(Math.random() * 1000) },
-      { name: "山西省", value: Math.round(Math.random() * 1000) },
-
-      { name: "陕西省", value: Math.round(Math.random() * 1000) },
-      { name: "吉林省", value: Math.round(Math.random() * 1000) },
-      { name: "福建省", value: Math.round(Math.random() * 1000) },
-      { name: "贵州省", value: Math.round(Math.random() * 1000) },
-      { name: "广东省", value: Math.round(Math.random() * 1000) },
-      { name: "青海省", value: Math.round(Math.random() * 1000) },
-      { name: "四川省", value: Math.round(Math.random() * 1000) },
-      { name: "海南省", value: Math.round(Math.random() * 1000) },
-
-      { name: "西藏", value: Math.round(Math.random() * 1000) },
-      { name: "宁夏", value: Math.round(Math.random() * 1000) },
-      { name: "新疆", value: Math.round(Math.random() * 1000) },
-      { name: "内蒙古", value: Math.round(Math.random() * 1000) },
-      { name: "广西", value: Math.round(Math.random() * 1000) },
-
-      { name: "台湾省", value: Math.round(Math.random() * 1000) },
-      { name: "香港", value: Math.round(Math.random() * 1000) },
-      { name: "澳门", value: Math.round(Math.random() * 1000) }
-    ],
-    // 数据映射  同china文件中的name进行映射
-    nameMap: {
-      "北京市": "北京",
-      "天津市": "天津",
-      "上海市": "上海",
-      "重庆市": "重庆",
-      "西藏自治区": "西藏",
-      "宁夏回族自治区": "宁夏",
-      "新疆维吾尔自治区": "新疆",
-      "内蒙古自治区": "内蒙古",
-      "广西壮族自治区": "广西",
-      "香港特别行政区": "香港",
-      "澳门特别行政区": "澳门",
-    },
+    data: [],
   }],
 })
 </script>
