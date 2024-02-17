@@ -1,8 +1,14 @@
 <template>
-  <div class="left" style="display: inline-block;width: 700px;height: 500px;box-sizing: border-box;">
-    <dv-button @click="allData" border="Border3" color="#c8161d" font-color="#e18a3b" style="display: inline-block;"
-      v-if="code !== '中国'">全国</dv-button>
-    <v-chart :option="option" ref="centerMapRef" @click="mapClick" v-if="flag" />
+  <div class="left">
+    <dv-button @click="allData" border="Border3" color="#c8161d" font-color="#e18a3b" v-if="code !== 'china'" class="allBtn">全国</dv-button>
+    <dv-decoration7 style="width:150px;height:30px;margin: 0 auto 10px;">
+      <div class="map_text">
+        地区分布
+      </div>
+    </dv-decoration7>
+    <dv-border-box13 style="width: 100%;height: 580px;">
+      <v-chart :option="option" ref="centerMapRef" @click="mapClick" v-if="flag" />
+    </dv-border-box13>
   </div>
 </template>
 
@@ -12,9 +18,10 @@ import china from '@/lib/china.json'
 import { regionCodes } from '@/lib/mapList'
 const { $echarts } = getCurrentInstance().appContext.app.config.globalProperties
 import axios from "axios";
+import { ElMessage } from 'element-plus'
 
 const flag = ref(false)
-const code = ref("中国"); //china 代表中国 其他地市是行政编码
+const code = ref("china"); //china 代表中国 其他地市是行政编码
 
 
 onMounted(() => {
@@ -24,9 +31,18 @@ onMounted(() => {
 })
 
 const mapClick = (params) => {
-  getCity()
-  filterMapName(params.name)
-
+  if (params.name === '南海诸岛') {
+    ElMessage.warning('暂无下级地市')
+    return
+  }
+  const xjs = regionCodes[params.name]
+  if (xjs) {
+    getCity()
+    filterMapName(params.name)
+  } else {
+    ElMessage.warning('暂无下级地市')
+    return
+  }
 };
 
 const getProvince = async () => {
@@ -41,7 +57,7 @@ const getCity = async () => {
 
 const filterMapName = (mapName) => {
   if (mapName === '中国') {
-    code.value = mapName
+    code.value = 'china'
     getMapJson('china')
     return
   }
@@ -66,7 +82,7 @@ const getMapJson = async (mapCode) => {
 }
 
 const drawMap = () => {
-  $echarts.registerMap('中国', china)
+  $echarts.registerMap('china', china)
 }
 
 const option = ref({
@@ -85,20 +101,38 @@ const option = ref({
     min: 0,
     max: 1000,
     // range: [100, 400],
-    left: 'left',
-    top: 'bottom',
+    left: 20,
+    bottom: 20,
     text: ['高', '低'],//取值范围的文字
     textStyle: {
       color: "#fff"
     },
     inRange: {
-      color: ['#e0ffff', '#006edd']//取值范围的颜色
+      // 渐变颜色，从小到大
+      // FFFFFF,EDF7FD,DBF0FA,C9E8F8,B7E1F6,A5D9F3,93D2F1,81CAEF,6FC2EC,5DBBEA,4AB3E8,38ACE5,26A4E3,1C9AD9,1A8DC7,
+      // 1781B5,
+      // 1573A2,136790,105A7E,0E4D6C,0C405A,093348,072636,051A24,020D12
+      color: [
+        // "#EDF7FD",
+        "rgba(237,247,253,.8)",
+        // "#B7E1F6",
+        "rgba(183,225,246,.9)",
+        // "#81CAEF",
+        "rgba(129,202,239,.9)",
+        // "#38ACE5",
+        "rgba(56,172,229,.9)",
+        // "#1781B5",
+        "rgba(23,129,181,.9)",
+        // "#105A7E",
+        "rgba(16,90,126,0.9)"
+      ],
+
     },
   }],
   series: [{
     type: 'map',
     name: "降水量",
-    map: '中国',//这里的名称需要和 echarts.registerMap('china',{})中的名称一致
+    map: 'china',//这里的名称需要和 echarts.registerMap('china',{})中的名称一致
     roam: true, //缩放
     zoom: 1.1,//默认地图在容器中显示zoom:1,可根据需求放大缩小地图
     label: {
@@ -165,7 +199,24 @@ const option = ref({
 
 <style scoped>
 .left {
-  padding-left: 20px;
-  padding-top: 40px;
+  display: inline-block;
+  width: 700px;
+  box-sizing: border-box;
+  position: relative;
+  padding-top: 20px;
+}
+
+.allBtn {
+  display: inline-block;
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  
+}
+.map_text {
+  color: #fff;
+  padding: 0 10px;
+  font-weight: bold;
+  font-size: 18px;
 }
 </style>

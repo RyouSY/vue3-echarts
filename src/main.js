@@ -6,7 +6,7 @@ import router from './router'
 import DataVVue3 from '@kjgl77/datav-vue3'
 import { registerEcharts } from "@/lib/echarts"
 import * as echarts from 'echarts'
-
+import 'element-plus/dist/index.css'
 
 import './mock/index'
 
