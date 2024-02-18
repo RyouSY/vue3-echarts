@@ -1,5 +1,4 @@
 import Mock from 'mockjs';
-const Random = Mock.Random
 
 Mock.mock('/api/user', 'get', {
   code: 200,
@@ -13,49 +12,111 @@ Mock.mock('/api/user', 'get', {
 Mock.mock('/api/page1', 'get', {
   code: 200,
   data: {
-    title: {
-      text: '一周销售额',
-      left: 'center',
-      textStyle:{
-        color: '#ffffff'
-      }
+    tooltip: {
+      trigger: 'axis',
     },
     xAxis: {
       type: 'category',
       data: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
       axisLabel: { color: '#ffffff' }
     },
-    yAxis: { type: 'value', axisLabel: { color: '#ffffff' } },
+    yAxis: {
+      type: 'value',
+      name: '万元',
+      nameTextStyle: {
+        color: '#ffffff'
+      },
+      axisLabel: { color: '#ffffff' }
+    },
     series: [{ 'data|7': ['@integer(1, 1000)'], type: 'bar' }]
   },
 });
 
-Mock.mock('/api/json', 'get', {
+Mock.mock('/api/page2', 'get', {
   code: 200,
-  'data|3': [
-    // 收入 平均寿命 人口 国家 年份
-    ['@integer(500, 10000)', '@integer(30, 75)', '@integer(10000, 100000000)', "@city()", '@increment(2000)'],
-    ['@integer(500, 10000)', '@integer(30, 75)', '@integer(10000, 100000000)', "france", '@increment(2000)'],
-    ['@integer(500, 10000)', '@integer(30, 75)', '@integer(10000, 100000000)', "germany", '@increment(2000)']
+  data: {
+    tooltip: {
+      trigger: 'axis'
+    },
+    legend: {
+      data: ['商品一', '商品二', '商品三', '商品四', '商品五'],
+      top: 30,
+      textStyle: {
+        color: '#ffffff'
+      }
+    },
+    grid: {
+      left: '3%',
+      right: '4%',
+      bottom: '3%',
+      containLabel: true
+    },
+    xAxis: {
+      type: 'category',
+      boundaryGap: false,
+      data: ['一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月'],
+      axisLabel: {
+        color: '#ffffff'
+      }
+    },
+    yAxis: {
+      type: 'value',
+      axisLabel: {
+        color: '#ffffff'
+      }
+    },
+    'series|5': [
+      {
+        'name|+1': ['商品一', '商品二', '商品三', '商品四', '商品五'],
+        type: 'line',
+        smooth: true,
+        'data|12': ['@integer(0, 1000)']
+      }
+    ]
+  }
+});
+
+Mock.mock('/api/page3', 'get', {
+  code: 200,
+  data: {
+    'data|10': [
+      {
+        name: "@city()",
+        value: '@integer(0, 200)'
+      }
+    ],
+    unit: '万元'
+  },
+});
+
+Mock.mock('/api/page4', 'get', {
+  code: 200,
+  'series|5': [
+    {
+      'name|+1': ['商品一', '商品二', '商品三', '商品四', '商品五'],
+      type: 'line',
+      stack: 'Total',
+      'data|12': ['@integer(0, 1000)']
+    }
   ],
 });
 
 Mock.mock('/api/city', 'get', {
   code: 200,
-  'data|100':  [
+  'data|100': [
     {
-        name: "@city()",
-        value: '@integer(0, 1000)'
+      name: "@city()",
+      value: '@integer(0, 1000)'
     }
-]
+  ]
 });
 
 Mock.mock('/api/province', 'get', {
   code: 200,
-  'data|12':  [
+  'data|12': [
     {
-        name: "@province()",
-        value: '@integer(0, 1000)'
+      name: "@province()",
+      value: '@integer(0, 1000)'
     }
-]
+  ]
 });

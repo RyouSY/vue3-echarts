@@ -1,6 +1,6 @@
 <template>
   <div class="left">
-    <dv-button @click="allData" border="Border3" color="#c8161d" font-color="#e18a3b" v-if="code !== 'china'" class="allBtn">全国</dv-button>
+    <dv-button @click="allData" border="Border5" color="#409eff" font-color="#409eff" v-if="code !== 'china'" class="allBtn">全国数据</dv-button>
     <dv-decoration7 style="width:150px;height:30px;margin: 0 auto 10px;">
       <div class="map_text">
         地区分布
@@ -199,8 +199,6 @@ const option = ref({
 
 <style scoped>
 .left {
-  display: inline-block;
-  width: 700px;
   box-sizing: border-box;
   position: relative;
   padding-top: 20px;
@@ -217,6 +215,6 @@ const option = ref({
   color: #fff;
   padding: 0 10px;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 22px;
 }
 </style>
