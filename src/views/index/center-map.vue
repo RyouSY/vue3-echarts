@@ -6,7 +6,7 @@
         地区分布
       </div>
     </dv-decoration7>
-    <dv-border-box13 style="width: 100%;height: 580px;">
+    <dv-border-box13 style="height: 580px;">
       <v-chart :option="option" ref="centerMapRef" @click="mapClick" v-if="flag" />
     </dv-border-box13>
   </div>
@@ -27,7 +27,7 @@ const code = ref("china"); //china 代表中国 其他地市是行政编码
 onMounted(() => {
   drawMap()
   getProvince()
-  flag.value = true
+  
 })
 
 const mapClick = (params) => {
@@ -48,6 +48,7 @@ const mapClick = (params) => {
 const getProvince = async () => {
   const result = await axios.get('/api/province')
   option.value.series[0].data = result.data.data
+  flag.value = true
 }
 
 const getCity = async () => {

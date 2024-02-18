@@ -28,7 +28,7 @@ Mock.mock('/api/page1', 'get', {
       },
       axisLabel: { color: '#ffffff' }
     },
-    series: [{ 'data|7': ['@integer(1, 1000)'], type: 'bar' }]
+    series: [{ 'data|7': ['@integer(1, 10)'], type: 'bar' }]
   },
 });
 
@@ -70,7 +70,7 @@ Mock.mock('/api/page2', 'get', {
         'name|+1': ['商品一', '商品二', '商品三', '商品四', '商品五'],
         type: 'line',
         smooth: true,
-        'data|12': ['@integer(0, 1000)']
+        'data|12': ['@integer(0, 100)']
       }
     ]
   }
@@ -119,4 +119,64 @@ Mock.mock('/api/province', 'get', {
       value: '@integer(0, 1000)'
     }
   ]
+});
+
+Mock.mock('/api/day', 'get', {
+  code: 200,
+  data: {
+    tooltip: {
+      trigger: 'axis'
+    },
+    xAxis: {
+      type: 'category',
+      data: ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24'],
+    },
+    yAxis: {
+      type: 'value',
+    },
+    series: [
+      {
+        type: 'line',
+        'data|24': ['@integer(0, 500)']
+      }
+    ]
+  }
+});
+
+Mock.mock('/api/top5', 'get', {
+  code: 200,
+  data: {
+    'data|5': [
+      {
+        'name|+1': ['商品一', '商品二', '商品三', '商品四', '商品五'],
+        value: '@integer(0, 1000)'
+      }
+    ],
+    colors: ['#e062ae', '#fb7293', '#e690d1', '#32c5e9', '#96bfff'],
+    unit: '万元',
+    labelNum: 5,
+  },
+});
+
+Mock.mock('/api/5year', 'get', {
+  code: 200,
+  data: {
+    tooltip: {
+      trigger: 'axis',
+    },
+    xAxis: {
+      type: 'category',
+      data: ['2019', '2020', '2021', '2022', '2023'],
+      axisLabel: { color: '#ffffff' }
+    },
+    yAxis: {
+      type: 'value',
+      name: '万元',
+      nameTextStyle: {
+        color: '#ffffff'
+      },
+      axisLabel: { color: '#ffffff' }
+    },
+    series: [{ 'data|5': ['@integer(1, 1000)'], type: 'bar' }]
+  },
 });

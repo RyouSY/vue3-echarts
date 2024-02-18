@@ -1,18 +1,12 @@
 <template>
   <div class="header">
-    <div class="nav">
-      <dv-button @click="console.log('click')" border="Border3" color="#c8161d" font-color="#e18a3b">测试页一</dv-button>
-      <dv-button @click="console.log('click')" border="Border3" color="#c8161d" font-color="#e18a3b">测试页二</dv-button>
-      <dv-button @click="console.log('click')" border="Border3" color="#c8161d" font-color="#e18a3b">测试页三</dv-button>
-    </div>
     <div class="title">
       <h1>数据可视化平台</h1>
       <dv-decoration5 :dur="2" style="width:600px;height:40px;" />
     </div>
     <div class="filer">
-      <dv-button @click="console.log('click')" border="Border3" color="#c8161d" font-color="#e18a3b">日期筛选</dv-button>
-      <dv-button @click="test2" border="Border3" color="#c8161d" font-color="#e18a3b">地区筛选</dv-button>
-      <dv-button @click="test" border="Border3" color="#c8161d" font-color="#e18a3b">页面设置</dv-button>
+      {{ dateData.dateWeek }} {{ dateData.dateDay }} {{ dateData.dataH }}
+      <button @click="test">测试</button>
     </div>
   </div>
 </template>
@@ -20,8 +14,29 @@
 <script setup>
 import axios from "axios";
 
+import dayjs from 'dayjs';
+import { reactive, watch } from "vue";
+const weekday = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"]
+const dateData = reactive({
+  dateDay: "",
+  dataH: "",
+  dateYear: "",
+  dateWeek: "",
+  timing: null
+});
+const timeFn = () => {
+  dateData.timing = setInterval(() => {
+    dateData.dateDay = dayjs().format("YYYY-MM-DD hh : mm : ss");
+    dateData.dataH = dayjs().format("hh")
+    dateData.dateWeek = weekday[dayjs().day()];
+  }, 1000);
+};
+timeFn()
+
+
+
 const test = async () => {
-  const result = await axios.get('/api/json')
+  const result = await axios.get('/api/day')
   console.log(result.data)
 }
 const test2 = async () => {
@@ -32,19 +47,8 @@ const test2 = async () => {
 </script>
 
 <style scoped>
-.nav {
-  color: white;
-  display: flex;
-}
-
-.nav>div {
-  margin-right: 20px;
-}
-
 .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  position: relative;
 }
 
 .title {
@@ -62,10 +66,10 @@ const test2 = async () => {
 }
 
 .filer {
-  display: flex;
-  align-items: flex-start;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translate(0, -50%);
+  color: #fff;
 }
-
-.filer>div {
-  margin-left: 20px;
-}</style>
+</style>

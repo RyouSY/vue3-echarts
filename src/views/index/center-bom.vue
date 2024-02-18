@@ -15,14 +15,6 @@
               <dv-digital-flop :config="config1" />
             </div>
           </dv-decoration-9>
-          <p>总销售额</p>
-        </div>
-        <div class="msg_txt">
-          <dv-decoration-9 style="width:130px;height:130px;">
-            <div class="text">
-              <dv-digital-flop :config="config1" />
-            </div>
-          </dv-decoration-9>
           <p>年销售额</p>
         </div>
         <div class="msg_txt">
@@ -32,6 +24,14 @@
             </div>
           </dv-decoration-9>
           <p>月销售额</p>
+        </div>
+        <div class="msg_txt">
+          <dv-decoration-9 style="width:130px;height:130px;">
+            <div class="text">
+              <dv-digital-flop :config="config1" />
+            </div>
+          </dv-decoration-9>
+          <p>周销售额</p>
         </div>
         <div class="msg_txt">
           <dv-decoration-9 style="width:130px;height:130px;">

@@ -10,9 +10,9 @@
       <centerBom />
     </div>
     <div class="right_box">
-      <leftTop />
-      <leftTop />
-      <leftTop />
+      <rightTop />
+      <rightCenter />
+      <rightBom />
     </div>
   </div>
 </template>
@@ -23,6 +23,9 @@ import leftCenter from './left-center.vue';
 import leftBom from './left-bom.vue';
 import centerMap from './center-map.vue';
 import centerBom from './center-bom.vue';
+import rightTop from './right-top.vue';
+import rightCenter from './right-center.vue';
+import rightBom from './right-bom.vue';
 
 </script>
 
@@ -44,8 +47,7 @@ import centerBom from './center-bom.vue';
   flex-shrink: 0;
 }
 .center_box{
-  flex: 1;
-  margin: 0 20px;
+  flex: 0 0 780px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
