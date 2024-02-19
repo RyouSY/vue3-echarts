@@ -58,6 +58,7 @@ const getProvince = async () => {
 
 const getCity = async () => {
   const result = await axios.get('/api/city')
+  console.log(result.data)
   option.value.series[0].data = result.data.data
 }
 
@@ -98,9 +99,9 @@ const option = ref({
     trigger: 'item',
     formatter: function (params) {
       if (params.data) {
-        return `${params.name}<br/>${params.data["value"]} (p / km2)`
+        return `${params.name}<br/>${params.data["value"]} 万元`
       } else {
-        return params.name;
+        return `${params.name}<br/>暂无数据`;
       }
     }
   },
@@ -139,6 +140,7 @@ const option = ref({
   }],
   series: [{
     type: 'map',
+    selectedMode: false,
     name: "降水量",
     map: 'china',//这里的名称需要和 echarts.registerMap('china',{})中的名称一致
     roam: true, //缩放

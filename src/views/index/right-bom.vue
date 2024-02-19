@@ -14,8 +14,14 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import axios from "axios";
+import { useAreaStore } from '@/stores/area'
+const areaStore = useAreaStore()
+
+watch(() => areaStore, () => {
+  getData()
+},{deep: true})
 
 onMounted(() => {
   getData()

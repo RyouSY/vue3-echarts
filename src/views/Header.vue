@@ -1,5 +1,8 @@
 <template>
   <div class="header">
+    <div class="local">
+      当前为 {{ areaStore.area == '中国'?'全国': areaStore.area }} 的数据
+    </div>
     <div class="title">
       <h1>数据可视化平台</h1>
       <dv-decoration5 :dur="2" style="width:600px;height:40px;" />
@@ -16,6 +19,8 @@ import dayjs from 'dayjs';
 import { reactive } from "vue";
 import { useDateStore } from '@/stores/date'
 import { filterContent } from "@/config/requestConfig";
+import { useAreaStore } from '@/stores/area'
+const areaStore = useAreaStore()
 
 const dateStore = useDateStore()
 const weekday = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"]
@@ -43,7 +48,7 @@ const timeFn = () => {
 timeFn()
 
 const test = async () => {
-  const result = await filterContent('/api/json', {params: {area: '北京'}})
+  const result = await filterContent('/api/json', { params: { area: '北京' } })
   console.log(result.data)
 }
 
@@ -76,5 +81,14 @@ const test = async () => {
   color: #fff;
   font-size: 18px;
   font-family: "arial";
+}
+
+.local{
+  position: absolute;
+  left: 0;
+  top: 70%;
+  transform: translate(0,-50%);
+  color: #fff;
+  font-size: 18px;
 }
 </style>

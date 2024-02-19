@@ -14,8 +14,10 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import axios from "axios";
+import { useAreaStore } from '@/stores/area'
+const areaStore = useAreaStore()
 
 onMounted(() => {
   getData()
@@ -25,6 +27,10 @@ const getData = async () => {
   const result = await axios.get('/api/page2')
   option.value = result.data.data
 }
+
+watch(() => areaStore, () => {
+  getData()
+},{deep: true})
 
 const option = ref({})
 </script>

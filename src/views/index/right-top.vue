@@ -8,7 +8,7 @@
           </div>
         </dv-decoration7>
       </div>
-      <div id="righttop" style="height: 280px;"></div>
+      <div id="righttop" style="height: 310px;"></div>
     </dv-border-box13>
   </div>
 </template>
@@ -27,12 +27,15 @@ const areaStore = useAreaStore()
 
 onMounted(() => {
   setData()
+  initECharts()
 })
 const setData = () => {
-  for(let i = 0; i < dayjs().format("H"); i++){
-    option2.value.series[0].data.push(Math.floor(Math.random() * 1000))
+  const arr = []
+  for(let i = 0; i <= dayjs().format("H"); i++){
+    arr.push(Math.floor(Math.random() * 1000))
+    
   }
-  initECharts()
+  option2.value.series[0].data = arr
 }
 
 const getData = async () => {
@@ -41,11 +44,7 @@ const getData = async () => {
   initECharts()
 }
 
-// watch(() => dateStore.dHour, (value) => {
-//   updataECharts()
-// },{deep: true})
-
-watch([() => dateStore.dHour, areaStore], (value) => {
+watch([() => dateStore.dHour, areaStore], () => {
   updataECharts()
 },{deep: true})
 
@@ -58,7 +57,7 @@ const initECharts = () => {
 const updataECharts = () => {
   const righttop = document.getElementById("righttop")
   const myecharts = $echarts.getInstanceByDom(righttop)
-  option2.value.series[0].data.push(Math.floor(Math.random() * 1000))
+  setData()
   myecharts.setOption(option2.value)
 }
 
