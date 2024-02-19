@@ -15,6 +15,13 @@ Mock.mock('/api/page1', 'get', {
     tooltip: {
       trigger: 'axis',
     },
+    legend: {
+      data: ['本周', '上周', '上上周'],
+      top: 30,
+      textStyle: {
+        color: '#ffffff'
+      }
+    },
     xAxis: {
       type: 'category',
       data: ['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日'],
@@ -28,7 +35,11 @@ Mock.mock('/api/page1', 'get', {
       },
       axisLabel: { color: '#ffffff' }
     },
-    series: [{ 'data|7': ['@integer(1, 10)'], type: 'bar' }]
+    series: [
+      { 'data|7': ['@integer(1, 10)'], type: 'bar', name: '本周' },
+      { 'data|7': ['@integer(1, 10)'], type: 'bar', name: '上周' },
+      { 'data|7': ['@integer(1, 10)'], type: 'bar', name: '上上周' }
+    ]
   },
 });
 
@@ -129,10 +140,15 @@ Mock.mock('/api/day', 'get', {
     },
     xAxis: {
       type: 'category',
-      data: ['01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24'],
+      data: ['00','01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23'],
+      axisLabel: { color: '#ffffff' }
     },
     yAxis: {
       type: 'value',
+      nameTextStyle: {
+        color: '#ffffff'
+      },
+      axisLabel: { color: '#ffffff' }
     },
     series: [
       {

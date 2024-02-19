@@ -19,6 +19,9 @@ import { regionCodes } from '@/lib/mapList'
 const { $echarts } = getCurrentInstance().appContext.app.config.globalProperties
 import axios from "axios";
 import { ElMessage } from 'element-plus'
+import { useAreaStore } from '@/stores/area'
+const areaStore = useAreaStore()
+
 
 const flag = ref(false)
 const code = ref("china"); //china 代表中国 其他地市是行政编码
@@ -27,7 +30,7 @@ const code = ref("china"); //china 代表中国 其他地市是行政编码
 onMounted(() => {
   drawMap()
   getProvince()
-  
+  localStorage.setItem('area','中国')
 })
 
 const mapClick = (params) => {
@@ -37,6 +40,8 @@ const mapClick = (params) => {
   }
   const xjs = regionCodes[params.name]
   if (xjs) {
+    localStorage.setItem('area', params.name)
+    areaStore.area = params.name
     getCity()
     filterMapName(params.name)
   } else {
@@ -59,6 +64,7 @@ const getCity = async () => {
 const filterMapName = (mapName) => {
   if (mapName === '中国') {
     code.value = 'china'
+    localStorage.setItem('area', mapName)
     getMapJson('china')
     return
   }
@@ -68,6 +74,7 @@ const filterMapName = (mapName) => {
 }
 
 const allData = () => {
+  areaStore.area = '中国'
   getProvince()
   filterMapName('中国')
 

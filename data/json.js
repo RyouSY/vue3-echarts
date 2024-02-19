@@ -1,20 +1,24 @@
 const fs = require('fs');
 const express = require('express')
 const app = express()
+const bodyParser = require('body-parser');
+
+// 解析 application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }));
+// 解析 application/json
+app.use(bodyParser.json());
 
 app.all('*', function(req, res, next) {
-	res.header("Access-Control-Allow-Origin", "*");
-	res.header("Access-Control-Allow-Headers", "content-type");
-	res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+	res.setHeader("Access-Control-Allow-Origin","http://localhost:5173");
+	res.setHeader('Access-Control-Allow-Credentials', 'true');
+	res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, Content-Length, Referer");
+	res.setHeader("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
 	next();
 });
 
 app.get('/api/json', (req, res) => {
-	
-	fs.readFile('./data.json', 'utf8', (err, data) => {
-		res.send(data)
-	})
-	
+	const result = req.query
+	res.send({data: result})
 })
 
 app.listen(8999, () => {
