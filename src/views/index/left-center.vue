@@ -14,19 +14,15 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import axios from "axios";
+import { onMounted } from "vue";
+import useGetData from "@/hooks/useGetData"
+
+const { getData, option } = useGetData()
 
 onMounted(() => {
-  getData()
+  getData('/api/leftcenter')
 })
 
-const getData = async () => {
-  const result = await axios.get('/api/page3')
-  option.value = result.data.data
-}
-
-const option = ref({})
 </script>
 
 <style scoped>

@@ -33,7 +33,6 @@ const setData = () => {
   const arr = []
   for(let i = 0; i <= dayjs().format("H"); i++){
     arr.push(Math.floor(Math.random() * 1000))
-    
   }
   option2.value.series[0].data = arr
 }
@@ -51,7 +50,6 @@ watch([() => dateStore.dHour, areaStore], () => {
 const initECharts = () => {
   const righttop = $echarts.init(document.getElementById("righttop"))
   righttop.setOption(option2.value)
-  
 }
 
 const updataECharts = () => {

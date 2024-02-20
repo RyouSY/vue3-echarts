@@ -41,10 +41,7 @@
           </dv-decoration-9>
           <p>日销售额</p>
         </div>
-
       </div>
-
-
     </dv-border-box13>
   </div>
 </template>

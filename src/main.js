@@ -9,8 +9,8 @@ import * as echarts from 'echarts'
 import 'element-plus/dist/index.css'
 import { createPinia } from 'pinia'
 
-import './mock/index'
-
+import { mockXHR } from './mock/index2'
+mockXHR()
 
 
 const app = createApp(App)

@@ -9,7 +9,7 @@ Mock.mock('/api/user', 'get', {
   },
 });
 
-Mock.mock('/api/page1', 'get', {
+Mock.mock(RegExp('/api/leftbom' + ".*"), 'get', {
   code: 200,
   data: {
     tooltip: {
@@ -43,7 +43,7 @@ Mock.mock('/api/page1', 'get', {
   },
 });
 
-Mock.mock('/api/page2', 'get', {
+Mock.mock(RegExp('/api/lefttop' + ".*"), 'get', {
   code: 200,
   data: {
     tooltip: {
@@ -87,7 +87,7 @@ Mock.mock('/api/page2', 'get', {
   }
 });
 
-Mock.mock('/api/page3', 'get', {
+Mock.mock(RegExp('/api/leftcenter' + ".*"), 'get', {
   code: 200,
   data: {
     'data|10': [
@@ -100,19 +100,7 @@ Mock.mock('/api/page3', 'get', {
   },
 });
 
-Mock.mock('/api/page4', 'get', {
-  code: 200,
-  'series|5': [
-    {
-      'name|+1': ['商品一', '商品二', '商品三', '商品四', '商品五'],
-      type: 'line',
-      stack: 'Total',
-      'data|12': ['@integer(0, 1000)']
-    }
-  ],
-});
-
-Mock.mock('/api/city', 'get', {
+Mock.mock(RegExp('/api/city' + ".*"), 'get', {
   code: 200,
   'data|100': [
     {
@@ -122,7 +110,7 @@ Mock.mock('/api/city', 'get', {
   ]
 });
 
-Mock.mock('/api/province', 'get', {
+Mock.mock(RegExp('/api/province' + ".*"), 'get', {
   code: 200,
   'data|12': [
     {
@@ -132,7 +120,7 @@ Mock.mock('/api/province', 'get', {
   ]
 });
 
-Mock.mock('/api/day', 'get', {
+Mock.mock(RegExp('/api/day' + ".*"), 'get', {
   code: 200,
   data: {
     tooltip: {
@@ -159,7 +147,7 @@ Mock.mock('/api/day', 'get', {
   }
 });
 
-Mock.mock('/api/top5', 'get', {
+Mock.mock(RegExp('/api/top5' + ".*"), 'get', {
   code: 200,
   data: {
     'data|5': [
@@ -174,7 +162,7 @@ Mock.mock('/api/top5', 'get', {
   },
 });
 
-Mock.mock('/api/5year', 'get', {
+Mock.mock(RegExp('/api/5year' + ".*"), 'get', {
   code: 200,
   data: {
     tooltip: {

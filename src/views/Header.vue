@@ -9,12 +9,12 @@
     </div>
     <div class="filer">
       {{ dateData.dateWeek }} {{ dateData.dateDay }}
+      <button @click="test">测试</button>
     </div>
   </div>
 </template>
 
 <script setup>
-import axios from "axios";
 import dayjs from 'dayjs';
 import { reactive } from "vue";
 import { useDateStore } from '@/stores/date'
@@ -47,8 +47,12 @@ const timeFn = () => {
 };
 timeFn()
 
+// const test = async () => {
+//   const result = await filterContent('/api/json', { params: { area: '北京' } })
+//   console.log(result.data)
+// }
 const test = async () => {
-  const result = await filterContent('/api/json', { params: { area: '北京' } })
+  const result = await filterContent('/api/test', { params: { area: '北京' } })
   console.log(result.data)
 }
 

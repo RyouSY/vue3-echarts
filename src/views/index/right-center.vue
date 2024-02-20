@@ -14,22 +14,15 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
-import axios from "axios";
+import { onMounted } from "vue";
+import useGetData from "@/hooks/useGetData"
+
+const { getData, option } = useGetData()
 
 onMounted(() => {
-  getData()
+  getData('/api/top5')
 })
 
-const getData = async () => {
-  const result = await axios.get('/api/top5')
-  let arr = result.data.data.data.sort((a, b) => {
-    return b.value - a.value
-  })
-  option.value = result.data.data
-}
-
-const option = ref({})
 </script>
 
 <style scoped>

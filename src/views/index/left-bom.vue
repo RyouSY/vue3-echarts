@@ -14,25 +14,19 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
-import axios from "axios";
-import { useAreaStore } from '@/stores/area'
-const areaStore = useAreaStore()
+import { onMounted, watch } from "vue";
+import useGetData from "@/hooks/useGetData"
 
-watch(() => areaStore, () => {
-  getData()
-},{deep: true})
+const { getData, option, areaStore } = useGetData()
 
 onMounted(() => {
-  getData()
+  getData('/api/leftbom')
 })
 
-const getData = async () => {
-  const result = await axios.get('/api/page1')
-  option.value = result.data.data
-}
+watch(() => areaStore, () => {
+  getData('/api/leftbom')
+},{deep: true})
 
-const option = ref({})
 </script>
 
 <style scoped>

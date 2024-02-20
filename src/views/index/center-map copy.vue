@@ -1,7 +1,6 @@
 <template>
   <div class="left">
-    <dv-button @click="allData" border="Border5" color="#409eff" font-color="#409eff" v-if="code !== 'china'"
-      class="allBtn">全国数据</dv-button>
+    <dv-button @click="allData" border="Border5" color="#409eff" font-color="#409eff" v-if="code !== 'china'" class="allBtn">全国数据</dv-button>
     <dv-decoration7 style="width:150px;height:30px;margin: 0 auto 10px;">
       <div class="map_text">
         地区分布
@@ -30,7 +29,7 @@ const code = ref("china"); //china 代表中国 其他地市是行政编码
 onMounted(() => {
   drawMap()
   getProvince()
-  localStorage.setItem('area', '中国')
+  localStorage.setItem('area','中国')
 })
 
 //点击地图后触发的事件
@@ -64,7 +63,7 @@ const getCity = async () => {
   option.value.series[0].data = result.data.data
 }
 
-//获取省市代码
+//判断是否选中的是全国
 const filterMapName = (mapName) => {
   if (mapName === '中国') {
     code.value = 'china'
@@ -84,38 +83,14 @@ const allData = () => {
 }
 
 //获取地图数据
-const getMapJson = (mapCode) => {
-  return new Promise(async (resolve) => {
-    const mapjson = await mapGet(`./mapjson/${mapCode}.json`)
-    option.value.series[0].map = code.value
-    $echarts.registerMap(code.value, {
-      geoJSON: mapjson.data,
-      specialAreas: {},
-    })
-    resolve(mapjson)
-  })
+const getMapJson = async (mapCode) => {
+  const result = await mapGet(`./mapjson/${mapCode}.json`)
+  option.value.series[0].map = code.value
+  $echarts.registerMap(code.value, {
+    geoJSON: result.data,
+    specialAreas: {},
+  });
 }
-
-const dataSetHandle = async (regionCode, list) => {
-  const geojson = await getGeojson(regionCode);
-  let cityCenter = {};
-  let mapData = [];
-  geojson.features.forEach((element) => {
-    cityCenter[element.properties.name] =
-      element.properties.centroid || element.properties.center;
-  });
-  list.forEach((item) => {
-    if (cityCenter[item.name]) {
-      mapData.push({
-        name: item.name,
-        value: cityCenter[item.name].concat(item.value),
-      });
-    }
-  });
-  await nextTick();
-
-  option.value = optionHandle(regionCode, list, mapData);
-};
 
 //注册地图
 const drawMap = () => {
@@ -227,14 +202,12 @@ const option = ref({
   position: relative;
   padding-top: 20px;
 }
-
 .allBtn {
   display: inline-block;
   position: absolute;
   right: 20px;
   top: 20px;
 }
-
 .map_text {
   color: #fff;
   padding: 0 10px;
