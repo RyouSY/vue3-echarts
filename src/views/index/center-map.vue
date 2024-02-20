@@ -96,27 +96,6 @@ const getMapJson = (mapCode) => {
   })
 }
 
-const dataSetHandle = async (regionCode, list) => {
-  const geojson = await getGeojson(regionCode);
-  let cityCenter = {};
-  let mapData = [];
-  geojson.features.forEach((element) => {
-    cityCenter[element.properties.name] =
-      element.properties.centroid || element.properties.center;
-  });
-  list.forEach((item) => {
-    if (cityCenter[item.name]) {
-      mapData.push({
-        name: item.name,
-        value: cityCenter[item.name].concat(item.value),
-      });
-    }
-  });
-  await nextTick();
-
-  option.value = optionHandle(regionCode, list, mapData);
-};
-
 //注册地图
 const drawMap = () => {
   $echarts.registerMap('china', china)

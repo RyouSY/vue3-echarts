@@ -5,11 +5,11 @@
     </div>
     <div class="title">
       <h1>数据可视化平台</h1>
-      <dv-decoration5 :dur="2" style="width:600px;height:40px;" />
+      <!-- <dv-decoration5 :dur="2" style="width:600px;height:40px;" /> -->
     </div>
     <div class="filer">
       {{ dateData.dateWeek }} {{ dateData.dateDay }}
-      <button @click="test">测试</button>
+      <!--<button @click="test">测试</button>-->
     </div>
   </div>
 </template>
@@ -61,10 +61,13 @@ const test = async () => {
 <style scoped>
 .header {
   position: relative;
+  margin-bottom: 10px;
 }
 
 .title {
   text-align: center;
+  background: url("@/assets/img/top.png") center/cover no-repeat;
+  height: 60px;
 }
 
 .title h1 {
