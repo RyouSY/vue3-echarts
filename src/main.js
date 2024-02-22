@@ -9,7 +9,8 @@ import * as echarts from 'echarts'
 import 'element-plus/dist/index.css'
 import { createPinia } from 'pinia'
 
-import { mockXHR } from './mock/index2'
+//不使用mock 请注释掉
+import { mockXHR } from './mock/index'
 mockXHR()
 
 

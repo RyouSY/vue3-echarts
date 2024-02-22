@@ -5,11 +5,9 @@
     </div>
     <div class="title">
       <h1>数据可视化平台</h1>
-      <!-- <dv-decoration5 :dur="2" style="width:600px;height:40px;" /> -->
     </div>
     <div class="filer">
       {{ dateData.dateWeek }} {{ dateData.dateDay }}
-      <!--<button @click="test">测试</button>-->
     </div>
   </div>
 </template>
@@ -46,15 +44,6 @@ const timeFn = () => {
   }, 1000);
 };
 timeFn()
-
-// const test = async () => {
-//   const result = await filterContent('/api/json', { params: { area: '北京' } })
-//   console.log(result.data)
-// }
-const test = async () => {
-  const result = await filterContent('/api/test', { params: { area: '北京' } })
-  console.log(result.data)
-}
 
 </script>
 
