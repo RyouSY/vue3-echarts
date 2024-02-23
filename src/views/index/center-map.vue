@@ -1,12 +1,13 @@
 <template>
   <div class="left">
-    <dv-button @click="allData" border="Border5" color="#409eff" font-color="#409eff" v-if="code !== 'china'"
+    <dv-button 
+			@click="allData" 
+			border="Border5" 
+			color="#409eff" 
+			font-color="#409eff" 
+			v-if="code !== 'china'"
       class="allBtn">全国数据</dv-button>
-    <dv-decoration7 style="width:150px;height:30px;margin: 0 auto 10px;">
-      <div class="map_text">
-        地区分布
-      </div>
-    </dv-decoration7>
+		<dv7 :style="{width: `150px`,height: `30px`,margin: `0 auto 10px`,fontSize: `22px`}" title="地区分布" />
     <dv-border-box13 style="height: 580px;">
       <v-chart :option="option" ref="centerMapRef" @click="mapClick" v-if="flag" />
     </dv-border-box13>
@@ -21,6 +22,7 @@ import { useAreaStore } from '@/stores/area'
 import { filterContent, mapGet } from "@/config/requestConfig";
 import { optionHandle, regionCodes } from './center-map'
 import { setStorage } from '@/lib/storage'
+import dv7 from '@/components/dv7.vue'
 const { $echarts } = getCurrentInstance().appContext.app.config.globalProperties
 const areaStore = useAreaStore()
 
@@ -119,12 +121,5 @@ const drawMap = () => {
   position: absolute;
   right: 20px;
   top: 20px;
-}
-
-.map_text {
-  color: #fff;
-  padding: 0 10px;
-  font-weight: bold;
-  font-size: 22px;
 }
 </style>

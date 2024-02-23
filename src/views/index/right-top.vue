@@ -2,11 +2,7 @@
   <div class="left">
     <dv-border-box13 style="width: 100%;height: 310px;">
       <div class="tu_title">
-        <dv-decoration7 style="width:150px;height:30px;margin: 0 auto 10px;">
-          <div class="map_text">
-            当天销售额
-          </div>
-        </dv-decoration7>
+				<dv7 :style="{width: `150px`,height: `30px`,margin: `0 auto 10px`}" title="当天销售额" />
       </div>
       <div id="righttop" style="height: 310px;"></div>
     </dv-border-box13>
@@ -19,6 +15,7 @@ import axios from "axios";
 import dayjs from 'dayjs';
 import { useDateStore } from '@/stores/date'
 import { useAreaStore } from '@/stores/area'
+import dv7 from '@/components/dv7.vue'
 const { $echarts } = getCurrentInstance().appContext.app.config.globalProperties
 
 const dateStore = useDateStore()
@@ -93,10 +90,6 @@ body {
   margin: 0;
 }
 
-.map_text {
-  color: #fff;
-  padding: 0 10px;
-}
 
 .tu_title {
   margin-bottom: -20px;
