@@ -4,7 +4,7 @@
       当前为 {{ areaStore.area == '中国'?'全国': areaStore.area }} 的数据
     </div>
     <div class="title">
-      <h1>数据可视化平台</h1>
+      <h1>数据可视化平台1</h1>
     </div>
     <div class="filer">
       {{ dateData.dateWeek }} {{ dateData.dateDay }}
