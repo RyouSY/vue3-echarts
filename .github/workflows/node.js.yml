@@ -6,19 +6,13 @@ name: Node.js CI
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [18.x, 20.x, 22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
     - uses: actions/checkout@v4
     - name: Use Node.js ${{ matrix.node-version }}
@@ -26,5 +20,17 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
-    - run: npm run build
+    - name: install
+      run: npm install
+    - name: build app
+      run: npm run build
+    - name: copy dist file whit scp
+      uses: appleboy/scp-action@v0.0.1
+      with:
+        host: ${{ secrets.REMOTE_HOST }}
+        user: ${{ secrets.REMOTE_USER }}
+        password: ${{ secrets.REMOTE_PASS }}
+        port: 22
+        source: "/"
+        target: ${{ secrets.REMOTE_TARGET }}
+
