@@ -21,12 +21,11 @@ jobs:
     - name: build app
       run: npm run build
     - name: copy dist file whit scp
-      uses: appleboy/scp-action@v0.0.1
+      uses: appleboy/scp-action@v0.1.7
       with:
         host: ${{ secrets.REMOTE_HOST }}
-        user: ${{ secrets.REMOTE_USER }}
+        username: ${{ secrets.REMOTE_USER }}
         password: ${{ secrets.REMOTE_PASS }}
-        port: 22
         source: "/"
         target: ${{ secrets.REMOTE_TARGET }}
 
